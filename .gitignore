@@ -1,2 +1,3 @@
 # Remove VSCodes automatically generated files
 .vscode/
+target/
