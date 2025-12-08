@@ -2,7 +2,7 @@
 use std::io;
 
 fn main() {
-    let filename = get_filename();
+    let filename = "./input-file/input.txt".to_string(); //get_filename();
 	let sum_part_one = part_one(&filename);
 	let sum_part_two = part_two(&filename);
     println!("part one: {sum_part_one}");
@@ -90,9 +90,13 @@ fn evalute_range_part_two(range: &str) -> Vec<u128> {
 	let mut collection: Vec<u128> = [].to_vec();
 	for i in range_start .. range_end {
 		let id_curr: String = i.to_string();
+		// take substrings until half way through the string
 		for j in 1 .. ((id_curr.len())/2) {
+			// Get the substring
 			let pat = id_curr.get(0..j).unwrap().to_string();
+			// get the rest of the string
 			let rest_of_str = id_curr.get(j..id_curr.len()).unwrap().to_string();
+			// Pass the substring and rest of the string into compare to end
 			if compare_to_end(pat, rest_of_str) {
 				collection.push(i);
 				break;
@@ -101,15 +105,18 @@ fn evalute_range_part_two(range: &str) -> Vec<u128> {
 	}
 	return collection;
 }
+
 // Compare the pattern to the rest of the string, patterns size by patterns size
 fn compare_to_end(pattern: String, rest_of_string: String) -> bool {
 	let size = pattern.len();
-
-	for i in 1 .. (rest_of_string.len() / size) {
+	let iters = rest_of_string.len();
+	let mut i = 0;
+	while i < iters {
 		let next_string_bit= rest_of_string.get(i .. i+size).unwrap();
 		if pattern != next_string_bit {
 			return false;
 		}
+		i += size;
 	}
 
 	return true;
